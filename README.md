@@ -1,6 +1,6 @@
 ## Description
 
-WeatherBot API 는 현재 날씨와 예보 정보를 종합하여, 날씨 요약 문구를 생성해주는 HTTP API 입니다. 
+WeatherBot API 는 현재 날씨와 예보 정보를 종합하여, 날씨 요약 문구를 생성해주는 서비스입니다. 
 
 ## Prerequisite
 
