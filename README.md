@@ -31,6 +31,11 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+```bash
+# api 테스트
+$ curl 'localhost:3000/summary?lat=-21.3&lon=125' | jq
+```
+
 ## Test
 
 ```bash
