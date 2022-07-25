@@ -4,8 +4,8 @@ WeatherBot API 는 현재 날씨와 예보 정보를 종합하여, 날씨 요약
 
 ## Prerequisite
 
-- nodejs 18.6
-- nestjs 9.0
+- 최신 버전의 nodejs (현재 18.6)
+- 최신 버전의 nestjs (현재 9.0)
 
 ```bash
 $ brew install node
