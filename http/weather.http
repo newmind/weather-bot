@@ -1,0 +1,12 @@
+### GET current
+GET https://thirdparty-weather-api-v2.droom.workers.dev/current?lat=13.3&lon=124&hour_offset=6&api_key=CMRJW4WT7V3QA5AOIGPBC
+Accept: application/json
+
+### GET forecast/hourly
+GET https://thirdparty-weather-api-v2.droom.workers.dev/forecast/hourly?lat=13.3&lon=124&hour_offset=24&api_key=CMRJW4WT7V3QA5AOIGPBC
+Accept: application/json
+
+### GET historical/hourly
+GET https://thirdparty-weather-api-v2.droom.workers.dev/historical/hourly?lat=13.3&lon=124&hour_offset=-6&api_key=CMRJW4WT7V3QA5AOIGPBC
+Accept: application/json
+
