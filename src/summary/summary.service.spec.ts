@@ -83,7 +83,7 @@ describe('SummaryService', () => {
   });
 
   describe('static getGreeting', () => {
-    it('[success] 0. 폭설', async () => {
+    it('[success] 0. 폭설: 눈오고, 강수량 100이상', async () => {
       // given
       const current: CurrentResDto = {
         code: WeatherCode.SNOW,
@@ -100,7 +100,7 @@ describe('SummaryService', () => {
       expect(greeting).toBe(SummaryService.greetings[0]);
     });
 
-    it('[success] 1. 눈', async () => {
+    it('[success] 1. 눈: 눈오고, 강수량 100미만', async () => {
       // given
       const current: CurrentResDto = {
         code: WeatherCode.SNOW,
@@ -117,8 +117,9 @@ describe('SummaryService', () => {
       expect(greeting).toBe(SummaryService.greetings[1]);
     });
 
-    it('[success] 2. 폭우', async () => {
+    it('[success] 2. 폭우: 비오고, 강수량 100이상', async () => {
       // given
+
       const current: CurrentResDto = {
         code: WeatherCode.RAIN,
         rain1h: 100,
@@ -134,7 +135,7 @@ describe('SummaryService', () => {
       expect(greeting).toBe(SummaryService.greetings[2]);
     });
 
-    it('[success] 3. 비', async () => {
+    it('[success] 3. 비: 비오고, 강수량 100미만', async () => {
       // given
       const current: CurrentResDto = {
         code: WeatherCode.RAIN,
@@ -168,7 +169,7 @@ describe('SummaryService', () => {
       expect(greeting).toBe(SummaryService.greetings[4]);
     });
 
-    it('[success] 5. 맑음, 30도 이상', async () => {
+    it('[success] 5. 맑음: 온도 30도 이상', async () => {
       // given
       const current: CurrentResDto = {
         code: WeatherCode.CLEAN,
@@ -185,7 +186,7 @@ describe('SummaryService', () => {
       expect(greeting).toBe(SummaryService.greetings[5]);
     });
 
-    it('[success] 6. 0도 이하', async () => {
+    it('[success] 6. 추움 : 0도 이하', async () => {
       // given
       const current: CurrentResDto = {
         code: WeatherCode.CLEAN,
@@ -223,6 +224,7 @@ describe('SummaryService', () => {
   describe('static getTempString', () => {
     it('[success] 1. 덜 더움', async () => {
       // given
+      // 온도가 n도 더 내려갔고 현재 온도가 15도 이상임
       const current: CurrentResDto = {
         temp: 15,
         code: undefined,
@@ -246,6 +248,7 @@ describe('SummaryService', () => {
 
     it('[success] 2. 더 추움', async () => {
       // given
+      // 온도가 n도 더 내려갔고 현재 온도가 15도 미만임
       const current: CurrentResDto = {
         temp: 14,
         code: undefined,
@@ -269,6 +272,7 @@ describe('SummaryService', () => {
 
     it('[success] 3. 더 더움', async () => {
       // given
+      // 온도가 n도 더 높아졌고 현재 온도가 15도 이상임
       const current: CurrentResDto = {
         temp: 15,
         code: undefined,
@@ -292,6 +296,7 @@ describe('SummaryService', () => {
 
     it('[success] 4. 덜 추움', async () => {
       // given
+      // 온도가 n도 더 높아졌고 현재 온도가 15도 미만임
       const current: CurrentResDto = {
         temp: 14,
         code: undefined,
@@ -315,6 +320,7 @@ describe('SummaryService', () => {
 
     it('[success] 5. 비슷하게 더움', async () => {
       // given
+      // 온도가 같고 그 온도가 15도 이상임
       const current: CurrentResDto = {
         temp: 15,
         code: undefined,
@@ -337,6 +343,7 @@ describe('SummaryService', () => {
 
     it('[success] 6. 비슷하게 추움', async () => {
       // given
+      // 온도가 같고 그 온도가 15도 미만임
       const current: CurrentResDto = {
         temp: 14,
         code: undefined,
@@ -398,7 +405,7 @@ describe('SummaryService', () => {
   });
 
   describe('static getHeadsUp', () => {
-    it('0. 24시간내 폭설', async () => {
+    it('0. 24시간내 폭설: 24시간 내에 눈이 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
       // given
       const forecast: ForecastResDto[] = [
         {
@@ -466,7 +473,7 @@ describe('SummaryService', () => {
       expect(headsUp).toBe(SummaryService.headUps[0]);
     });
 
-    it('1. 48시간내 눈', async () => {
+    it('1. 48시간내 눈: 48시간 내에 눈이 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
       // given
       const forecast: ForecastResDto[] = [
         {
@@ -534,7 +541,7 @@ describe('SummaryService', () => {
       expect(headsUp).toBe(SummaryService.headUps[1]);
     });
 
-    it('2. 24시간내 비', async () => {
+    it('2. 24시간내 비: 24시간 내에 비가 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
       // given
       const forecast: ForecastResDto[] = [
         {
@@ -602,7 +609,7 @@ describe('SummaryService', () => {
       expect(headsUp).toBe(SummaryService.headUps[2]);
     });
 
-    it('3. 48시간내 비', async () => {
+    it('3. 48시간내 비: 48시간 이내에 비가 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
       // given
       const forecast: ForecastResDto[] = [
         {
