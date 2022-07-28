@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { SummaryService } from './summary.service';
+import { GREETING_STATE, HEADUP_STATE, SummaryService } from './summary.service';
 import { WeatherService } from './weather.service';
 
 import { CurrentResDto, ForecastResDto, HistoryResDto, WeatherCode } from '@src/summary/dto/weather.dto';
@@ -97,7 +97,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[0]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.HEAVY_SNOW]);
     });
 
     it('[success] 1. 눈: 눈오고, 강수량 100미만', async () => {
@@ -114,7 +114,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[1]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.SNOW]);
     });
 
     it('[success] 2. 폭우: 비오고, 강수량 100이상', async () => {
@@ -132,7 +132,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[2]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.HEAVY_RAIN]);
     });
 
     it('[success] 3. 비: 비오고, 강수량 100미만', async () => {
@@ -149,7 +149,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[3]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.RAIN]);
     });
 
     it('[success] 4. 흐림', async () => {
@@ -166,7 +166,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[4]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.CLOUD]);
     });
 
     it('[success] 5. 맑음: 온도 30도 이상', async () => {
@@ -183,7 +183,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[5]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.CLEAN]);
     });
 
     it('[success] 6. 추움 : 0도 이하', async () => {
@@ -200,7 +200,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[6]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.COLD]);
     });
 
     it('[success] 7. 그 외', async () => {
@@ -217,7 +217,7 @@ describe('SummaryService', () => {
 
       // then
       expect(greeting).toBeDefined();
-      expect(greeting).toBe(SummaryService.greetings[7]);
+      expect(greeting).toBe(SummaryService.greetings[GREETING_STATE.VERY_CLEAN]);
     });
   });
 
@@ -470,7 +470,7 @@ describe('SummaryService', () => {
       const headsUp = SummaryService.getHeadsUp(forecast);
 
       // then
-      expect(headsUp).toBe(SummaryService.headUps[0]);
+      expect(headsUp).toBe(SummaryService.headUps[HEADUP_STATE.HEAVY_SNOW]);
     });
 
     it('1. 48시간내 눈: 48시간 내에 눈이 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
@@ -538,7 +538,7 @@ describe('SummaryService', () => {
       const headsUp = SummaryService.getHeadsUp(forecast);
 
       // then
-      expect(headsUp).toBe(SummaryService.headUps[1]);
+      expect(headsUp).toBe(SummaryService.headUps[HEADUP_STATE.SNOW]);
     });
 
     it('2. 24시간내 비: 24시간 내에 비가 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
@@ -606,7 +606,7 @@ describe('SummaryService', () => {
       const headsUp = SummaryService.getHeadsUp(forecast);
 
       // then
-      expect(headsUp).toBe(SummaryService.headUps[2]);
+      expect(headsUp).toBe(SummaryService.headUps[HEADUP_STATE.HEAVY_RAIN]);
     });
 
     it('3. 48시간내 비: 48시간 이내에 비가 내릴 것으로 예측되는 경우가 12시간 이상', async () => {
@@ -674,7 +674,7 @@ describe('SummaryService', () => {
       const headsUp = SummaryService.getHeadsUp(forecast);
 
       // then
-      expect(headsUp).toBe(SummaryService.headUps[3]);
+      expect(headsUp).toBe(SummaryService.headUps[HEADUP_STATE.RAIN]);
     });
 
     it('4. 그외', async () => {
@@ -742,7 +742,7 @@ describe('SummaryService', () => {
       const headsUp = SummaryService.getHeadsUp(forecast);
 
       // then
-      expect(headsUp).toBe(SummaryService.headUps[4]);
+      expect(headsUp).toBe(SummaryService.headUps[HEADUP_STATE.CLEAN]);
     });
   });
 });

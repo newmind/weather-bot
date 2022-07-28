@@ -5,6 +5,27 @@ import { SummaryResponseDto } from '@src/summary/dto/summary.dto';
 import { CurrentResDto, ForecastResDto, HistoryResDto, WeatherCode } from '@src/summary/dto/weather.dto';
 import { WeatherService } from '@src/summary/weather.service';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export enum GREETING_STATE {
+  HEAVY_SNOW = 0,
+  SNOW,
+  HEAVY_RAIN,
+  RAIN,
+  CLOUD,
+  CLEAN = 5,
+  COLD,
+  VERY_CLEAN,
+}
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export enum HEADUP_STATE {
+  HEAVY_SNOW = 0,
+  SNOW,
+  HEAVY_RAIN,
+  RAIN,
+  CLEAN,
+}
+
 @Injectable()
 export class SummaryService {
   static readonly greetings = [
@@ -32,34 +53,34 @@ export class SummaryService {
     // | 우선순위 | 조건 | 문구 |
     // | 0 | 현재 날씨가 눈 이며 강수량이 100mm 이상인 경우 | 폭설이 내리고 있어요. |
     if (current.code == WeatherCode.SNOW && current.rain1h >= 100) {
-      return SummaryService.greetings[0];
+      return SummaryService.greetings[GREETING_STATE.HEAVY_SNOW];
     }
     // | 1 | 현재 날씨가 눈인 경우 | 눈이 포슬포슬 내립니다. |
     if (current.code == WeatherCode.SNOW) {
-      return SummaryService.greetings[1];
+      return SummaryService.greetings[GREETING_STATE.SNOW];
     }
     // | 2 | 현재 날씨가 비 이며, 강수량이 100mm 이상인 경우 | 폭우가 내리고 있어요. |
     if (current.code == WeatherCode.RAIN && current.rain1h >= 100) {
-      return SummaryService.greetings[2];
+      return SummaryService.greetings[GREETING_STATE.HEAVY_RAIN];
     }
     // | 3 | 현재 날씨가 비인 경우 | 비가 오고 있습니다. |
     if (current.code == WeatherCode.RAIN) {
-      return SummaryService.greetings[3];
+      return SummaryService.greetings[GREETING_STATE.RAIN];
     }
     // | 4 | 현재 날씨가 흐림인 경우 | 날씨가 약간은 칙칙해요. |
     if (current.code == WeatherCode.CLOUD) {
-      return SummaryService.greetings[4];
+      return SummaryService.greetings[GREETING_STATE.CLOUD];
     }
     // | 5 | 현재 날씨가 맑고, 현재 온도가 30도 이상인 경우 | 따사로운 햇살을 맞으세요. |
     if (current.code == WeatherCode.CLEAN && current.temp >= 30) {
-      return SummaryService.greetings[5];
+      return SummaryService.greetings[GREETING_STATE.CLEAN];
     }
     // | 6 | 현재 온도가 0도 이하인 경우 | 날이 참 춥네요. |
     if (current.temp <= 0) {
-      return SummaryService.greetings[6];
+      return SummaryService.greetings[GREETING_STATE.COLD];
     }
     // | 7 | 그 외 | 날씨가 참 맑습니다. |
-    return SummaryService.greetings[7];
+    return SummaryService.greetings[GREETING_STATE.VERY_CLEAN];
   }
 
   /* history[0] -6시
@@ -97,23 +118,23 @@ export class SummaryService {
 
     // | 0 | 앞으로 24시간 내에 눈이 내릴 것으로 예측되는 경우가 12시간 이상 | 내일 폭설이 내릴 수도 있으니 외출 시 주의하세요. |
     if (forecast24ByCode[WeatherCode.SNOW] >= 2) {
-      return SummaryService.headUps[0];
+      return SummaryService.headUps[HEADUP_STATE.HEAVY_SNOW];
     }
     // | 1 | 앞으로 48시간 내에 눈이 내릴 것으로 예측되는 경우가 12시간 이상 | 눈이 내릴 예정이니 외출 시 주의하세요. |
     if (forecast48ByCode[WeatherCode.SNOW] >= 2) {
-      return SummaryService.headUps[1];
+      return SummaryService.headUps[HEADUP_STATE.SNOW];
     }
     // | 2 | 앞으로 24시간 내에 비가 내릴 것으로 예측되는 경우가 12시간 이상 | 폭우가 내릴 예정이에요. 우산을 미리 챙겨두세요. |
     if (forecast24ByCode[WeatherCode.RAIN] >= 2) {
-      return SummaryService.headUps[2];
+      return SummaryService.headUps[HEADUP_STATE.HEAVY_RAIN];
     }
     // | 3 | 앞으로 48시간 이내에 비가 내릴 것으로 예측되는 경우가 12시간 이상 | 며칠동안 비 소식이 있어요. |
     if (forecast48ByCode[WeatherCode.RAIN] >= 2) {
-      return SummaryService.headUps[3];
+      return SummaryService.headUps[HEADUP_STATE.RAIN];
     }
 
     // | 4 | 그 외 | 날씨는 대체로 평온할 예정이에요. |
-    return SummaryService.headUps[4];
+    return SummaryService.headUps[HEADUP_STATE.CLEAN];
   }
 
   static getTempString(current: CurrentResDto, yesterday: HistoryResDto) {
